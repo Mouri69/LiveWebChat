@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const socket = io('https://mouri69-livewebchat.vercel.app/api/socket');  // Ensure this is correctly initialized
+    const socket = io();  // Ensure this is correctly initialized
 
     // Handle connection
     socket.on('connect', () => {
