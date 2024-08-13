@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const socket = io('http://localhost:3000');  // Adjust URL as needed
+    const socket = io();  // Adjust URL as needed
 
 
     socket.on('connect', () => {
