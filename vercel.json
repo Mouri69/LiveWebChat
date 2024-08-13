@@ -1,8 +1,8 @@
 {
-    "rewrites": [
+    "routes": [
       {
-        "source": "/socket.io",
-        "destination": "/api/socket.js"
+        "src": "/api/socket/(.*)",
+        "dest": "/api/socket.js"
       }
     ]
   }

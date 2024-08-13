@@ -1,28 +1,33 @@
-const { Server } = require("socket.io");
+const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');  // Import Server from socket.io
 
-const ioHandler = (req, res) => {
-    if (!res.socket.server.io) {
-        console.log("Setting up Socket.io");
-
-        const io = new Server(res.socket.server);
-        io.on("connection", (socket) => {
-            console.log("New user connected:", socket.id);
-
-            socket.on("disconnect", () => {
-                console.log("User disconnected:", socket.id);
-            });
-
-            socket.on("chat message", ({ username, message }) => {
-                console.log("Received chat message from", username, ":", message);
-                io.emit("chat message", { username, message });
-            });
-        });
-
-        res.socket.server.io = io;
-    } else {
-        console.log("Socket.io already set up");
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {   // Initialize Socket.IO with the server
+    path: '/api/socket',         // Define the path for Socket.IO
+    cors: {
+        origin: '*',
+        methods: ['GET', 'POST']
     }
-    res.end();
-};
+});
 
-export default ioHandler;
+app.use(express.static('public'));
+
+io.on('connection', (socket) => {
+    console.log('New user connected:', socket.id);
+
+    socket.on('disconnect', () => {
+        console.log('User disconnected:', socket.id);
+    });
+
+    socket.on('chat message', ({ username, message }) => {
+        console.log('Received chat message from', username, ':', message);
+        io.emit('chat message', { username, message });
+    });
+});
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
