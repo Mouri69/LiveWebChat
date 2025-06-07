@@ -6,6 +6,7 @@ module.exports = (req, res) => {
 
     const io = new Server(res.socket.server, {
       path: '/api/socket',
+      addTrailingSlash: false,  // Prevents adding trailing slash
       cors: {
         origin: '*', // Allow all origins
         methods: ['GET', 'POST']

@@ -5,7 +5,7 @@
       { "src": "api/socket.js", "use": "@vercel/node" }
     ],
     "routes": [
-      { "src": "/api/socket/(.*)", "dest": "/api/socket.js" },
+      { "src": "/api/socket", "dest": "/api/socket.js" },
       { "src": "/(.*)", "dest": "/public/$1" }
     ]
   }
